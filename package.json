@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/MahmoudSerag/Sheet-Compare-Tool#readme",
   "dependencies": {
+    "csv-parser": "^3.2.0",
     "xlsx": "^0.18.5"
   }
 }
