@@ -1,0 +1,24 @@
+{
+  "name": "sheet-compare-tool",
+  "version": "1.0.0",
+  "description": "A lightweight Node.js tool to compare two Excel sheets by ID and extract rows that exist only in one sheet. Fast and efficient using Set-based comparison for optimal performance.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MahmoudSerag/Sheet-Compare-Tool.git"
+  },
+  "keywords": [],
+  "author": "Mahmoud Serag",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/MahmoudSerag/Sheet-Compare-Tool/issues"
+  },
+  "homepage": "https://github.com/MahmoudSerag/Sheet-Compare-Tool#readme",
+  "dependencies": {
+    "xlsx": "^0.18.5"
+  }
+}
