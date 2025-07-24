@@ -1,7 +1,11 @@
 # compiled output
 /node_modules
 
+# logs
+result.json
+
 # IDE - VSCode
+.vscode
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
