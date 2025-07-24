@@ -1,13 +1,17 @@
-const { sheet1Path, sheet2Path } = require("./config/paths");
+const fs = require("fs");
+const { sourceFilePath, internalFilePath } = require("./config/paths");
 const { readCSV } = require("./readers/csvReader");
-const { compareById } = require("./utils/comparer");
+const { compareTransactions } = require("./utils/comparer");
 
 async function main() {
   try {
-    const sheet1 = await readCSV(sheet1Path);
-    const sheet2 = await readCSV(sheet2Path);
+    const sourceData = await readCSV(sourceFilePath);
+    const internalData = await readCSV(internalFilePath);
 
-    const result = compareById(sheet1, sheet2);
+    const comparisonResult = compareTransactions(sourceData, internalData);
+
+    console.log(JSON.stringify(comparisonResult, null, 2));
+    fs.writeFileSync("result.json", JSON.stringify(comparisonResult, null, 2));
   } catch (error) {
     console.error("Error:", error.message);
   }
