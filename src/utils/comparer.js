@@ -1,11 +1,62 @@
-function compareById(sheet1, sheet2) {
-  const ids2 = new Set(sheet2.map((row) => row.providerTransactionId));
-  const ids1 = new Set(sheet1.map((row) => row.providerTransactionId));
+function compareTransactions(sourceData, internalData) {
+  const missingInInternal = [];
+  const missingInSource = [];
+  const mismatchedTransactions = [];
 
-  const onlyIn1 = sheet1.filter((row) => !ids2.has(row.providerTransactionId));
-  const onlyIn2 = sheet2.filter((row) => !ids1.has(row.providerTransactionId));
+  const sourceMap = new Map();
+  const internalMap = new Map();
 
-  return { onlyIn1, onlyIn2 };
+  sourceData.forEach((row) => {
+    sourceMap.set(row.providerTransactionId, row);
+  });
+
+  internalData.forEach((row) => {
+    internalMap.set(row.transactionId, row);
+  });
+
+  // Check missing in internal and mismatches
+  for (const [txnId, sourceRow] of sourceMap.entries()) {
+    if (!internalMap.has(txnId)) {
+      missingInInternal.push(sourceRow);
+    } else {
+      const internalRow = internalMap.get(txnId);
+      const discrepancies = {};
+
+      if (parseFloat(sourceRow.amount) !== parseFloat(internalRow.amount)) {
+        discrepancies.amount = {
+          source: parseFloat(sourceRow.amount),
+          system: parseFloat(internalRow.amount),
+        };
+      }
+
+      if (sourceRow.status !== internalRow.status) {
+        discrepancies.status = {
+          source: sourceRow.status,
+          system: internalRow.status,
+        };
+      }
+
+      if (Object.keys(discrepancies).length > 0) {
+        mismatchedTransactions.push({
+          transactionId: txnId,
+          discrepancies,
+        });
+      }
+    }
+  }
+
+  // Check missing in source
+  for (const [txnId, internalRow] of internalMap.entries()) {
+    if (!sourceMap.has(txnId)) {
+      missingInSource.push(internalRow);
+    }
+  }
+
+  return {
+    missing_in_internal: missingInInternal,
+    missing_in_source: missingInSource,
+    mismatched_transactions: mismatchedTransactions,
+  };
 }
 
-module.exports = { compareById };
+module.exports = { compareTransactions };
