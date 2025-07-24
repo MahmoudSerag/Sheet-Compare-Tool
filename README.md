@@ -44,6 +44,7 @@ The challenge was to build a reconciliation service that reads transaction data 
 
 ## 📁 Folder Structure
 
+```text
 sheet-compare-tool/
 │
 ├── data/
@@ -55,13 +56,13 @@ sheet-compare-tool/
 ├── src/
 │ ├── config/
 │ │ └── paths.js # Paths to input CSV files
-│ │
+│
 │ ├── readers/
 │ │ └── csvReader.js # CSV reading and parsing utility
-│ │
+│
 │ ├── utils/
 │ │ └── comparer.js # Main comparison logic
-│ │
+│
 │ └── index.js # Entry point that ties everything together
 │
 ├── result.json # Final output result (in JSON)
@@ -70,6 +71,7 @@ sheet-compare-tool/
 ├── package.json
 ├── package-lock.json
 └── README.md # Project documentation
+```
 
 ---
 
